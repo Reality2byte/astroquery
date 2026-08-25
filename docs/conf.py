@@ -171,10 +171,11 @@ nitpick_ignore = [('py:class', 'astroquery.mast.core.MastQueryWithLogin'),
 
 # -- Linkcheck builder options ----------------------------------------------
 #
-
-# These anchors don't resolve with the linkchecker, but work well from the browser
-linkcheck_ignore = ['https://mast.stsci.edu/search/ui/#/jwst',
-                    'https://mast.stsci.edu/search/ui/#/hst',
-                    'https://nxsa.esac.esa.int/nxsa-web/#aio',
-                    'https://ssd.jpl.nasa.gov/horizons/manual.html#center',
-                    'https://splatalogue.online/#/basic']
+linkcheck_retry = 3
+linkcheck_ignore = [
+    'https://mast.stsci.edu/search/ui/#', # these anchors don't work with linkcheker
+    'https://nxsa.esac.esa.int/nxsa-web/#aio',
+    'https://ssd.jpl.nasa.gov/horizons/manual.html#center',
+    'https://splatalogue.online/#/basic',
+    'https://ui.adsabs.harvard.edu',  # 405 Client Error: Not Allowed for sphinx-build
+]
