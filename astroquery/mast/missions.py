@@ -442,7 +442,7 @@ class MastMissionsClass(MastQueryWithLogin):
         self._validate_criteria(**criteria)
 
         # Build query
-        params = {"limit": self.limit, "offset": offset, "select_cols": self._parse_select_cols(select_cols, mission)}
+        params = {"limit": self.limit, "offset": offset, "select_cols": self._parse_select_cols(select_cols)}
 
         # Parse target information if coordinates or object names are provided
         if coordinates is not None or object_names is not None:
