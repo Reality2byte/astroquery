@@ -441,23 +441,23 @@ class MastMissionsClass(MastQueryWithLogin):
         # Check that criteria arguments are valid
         self._validate_criteria(**criteria)
 
-        target_strings = None
+        # Build query
+        params = {"limit": self.limit, "offset": offset, "select_cols": self._parse_select_cols(select_cols, mission)}
+
+        # Parse target information if coordinates or object names are provided
         if coordinates is not None or object_names is not None:
             target_strings = self._parse_multiple_targets(coordinates=coordinates,
                                                           object_names=object_names,
                                                           resolver=resolver)
 
-        # if radius is just a number we assume degrees
-        radius = Angle(radius, u.arcmin)
+            # if radius is just a number we assume degrees
+            radius = Angle(radius, u.arcmin)
 
-        if radius > self._max_query_radius:
-            raise InvalidQueryError(
-                f"Query radius too large. Must be ≤{self._max_query_radius}, got {radius}."
-            )
+            if radius > self._max_query_radius:
+                raise InvalidQueryError(
+                    f"Query radius too large. Must be ≤{self._max_query_radius}, got {radius}."
+                )
 
-        # build query
-        params = {"limit": self.limit, "offset": offset, 'select_cols': self._parse_select_cols(select_cols)}
-        if target_strings:
             params["target"] = target_strings
             params["radius"] = radius.arcsec
             params["radius_units"] = 'arcseconds'
